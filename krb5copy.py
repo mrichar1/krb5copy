@@ -7,7 +7,7 @@ import krb5
 log = logging.getLogger()
 
 
-class KrbMv:
+class Krb5Copy:
 
     def __init__(self, args):
         self.args = args
@@ -83,4 +83,4 @@ def to_bytes(val):
 
 if __name__ == '__main__':
     args = parse_args()
-    KrbMv(args)
+    Krb5Copy(args)
