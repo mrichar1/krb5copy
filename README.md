@@ -4,11 +4,30 @@ A simple tool to allow copying of kerberos credentials from one cache to another
 
 ## Installation
 
+There are 2 versions available - `C` and `Python`. The python version has more functionality, but the C version is more easily distributed.
+
+### C
+
+This tool relies on `krb5.h`, commonly provided by `libkrb5-dev` or `krb5-devel` packages on Debian and Redhat distributions.
+
+`make`
+
+### C Usage
+
+Source cache: default ccache (`$KRB5CCNAME` variable, or system default).
+
+Target cache: `$KRB5CCNEW` environment variable.
+
+Improvements to add same argument functionality as Python welcome!
+
+
+### Python
+
 This tool relies on the python [krb5](https://pypi.org/project/krb5/) package.
 
 `pip install -r requirements.txt`
 
-## Usage
+### Python Usage
 
 ```
 krb5copy.py --help
@@ -30,15 +49,15 @@ options:
 ### Examples
 
 ```
-# Copy the cache in the default keyring ($KRB5CCNAME) into a KEYRING collection
+# Copy the default cache ($KRB5CCNAME) into a KEYRING collection, and switch it to be the default
 KRB5CCNEW="KEYRING:persistent:$(id -u)"
 krb5copy
 export KRB5CCNAME=$KRB5CCNEW
 ```
 
 ```
-# Replace a DIR collection with a FILE cache
-krb5copy -c FILE:/tmp/krb5cc_1000 -n DIR:/tmp/krb5cc_dir --force
+# Copy a specific cache into a DIR collection
+KKRB5CCNAME=FILE:/tmp/krb5cc_1000 KRB5CCNEW=DIR:/tmp/krb5cc_dir krb5copy
 ```
 
 
