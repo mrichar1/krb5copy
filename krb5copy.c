@@ -25,7 +25,7 @@ int cleanup(int retval) {
         krb5_cc_close(context, tgt_ccache);
     }
 
-    if (write_ccache != NULL) {
+    if (write_ccache != tgt_ccache && write_ccache != NULL) {
         krb5_cc_close(context, write_ccache);
     }
 
@@ -137,7 +137,10 @@ int main() {
     }
 
     // Success - tidy up.
-    krb5_cc_end_seq_get(context, src_ccache, &cursor);
+    log_krb5_error(
+        "krb5_cc_end_seq_get",
+        krb5_cc_end_seq_get(context, src_ccache, &cursor)
+    );
     cleanup(0);
 }
 
